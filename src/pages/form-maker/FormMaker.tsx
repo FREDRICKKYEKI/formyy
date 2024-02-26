@@ -14,12 +14,11 @@ const FormMaker: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
   const params = useParams();
-  const [loading, setLoading] = useState<boolean>(true);
+  const [form, setForm] = useState<any>(null);
 
   const handleFormElementsUpdate = (state: BaseFormElementProps[]) => {
     dispatch(setFormElements(state));
   };
-
   useEffect(() => {
     if (!params.id) {
       alert(
@@ -27,37 +26,24 @@ const FormMaker: FC = () => {
       );
       window.location.href = "/";
     }
-
-    fetch(`${serverUrl}/forms/${params.id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data: any) => {
-        setLoading(false);
-        dispatch(setFormElements(JSON.parse(data.form.form_schema)));
-      })
-      .catch((e) => {
-        setLoading(false);
-        console.error("Something went wrong !", e);
-      });
-  });
+    setForm((window as any)?.__GLOBAL_STATE__?.form);
+    handleFormElementsUpdate(
+      JSON.parse((window as any)?.__GLOBAL_STATE__?.form.form_schema)
+    );
+  }, []);
 
   return (
     <div className="w-100">
       <Header />
       <div className="row d-flex p-4 w-100">
-        {loading ? (
-          <h4>Loading form...</h4>
-        ) : (
-          <>
-            <FormElements isOpen={isOpen} setIsOpen={setIsOpen} />
-            <MainFormSection />
-            <ElementSettings />
-          </>
-        )}
+        <hr />
+        <h5>
+          {form?.title} - {form?.description}
+        </h5>
+        <hr />
+        <FormElements isOpen={isOpen} setIsOpen={setIsOpen} />
+        <MainFormSection />
+        <ElementSettings />
       </div>
       <MainFormElementModal
         open={isOpen}

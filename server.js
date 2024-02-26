@@ -6,6 +6,7 @@ import db from "./db_engine/db.js";
 import { generateToken } from "./utils.js";
 import { authRouter } from "./routers/authRouters.js";
 import { formRouter } from "./routers/formRouter.js";
+import getServerSideProps from "./helpers/getServerSideProps.js";
 
 try {
   await db.authenticate();
@@ -61,6 +62,12 @@ app.get("/status", (_req, res) => {
 
 // Serve HTML
 app.use("*", async (req, res) => {
+  const globalProps = { cookies: req.cookies };
+
+  await getServerSideProps(req.originalUrl).then((data) => {
+    Object.assign(globalProps, data);
+  });
+
   try {
     const url = req.originalUrl.replace(base, "");
     let template;
@@ -77,7 +84,15 @@ app.use("*", async (req, res) => {
 
     const rendered = await render(req, ssrManifest);
 
+    let globalPropsWithoutCookie = Object.fromEntries(
+      Object.entries(globalProps).filter(([key]) => key !== "cookies")
+    );
+
     const html = template
+      .replace(
+        `<!--app-state-->`,
+        `window.__GLOBAL_STATE__=${JSON.stringify(globalPropsWithoutCookie)}`
+      )
       .replace(`<!--app-head-->`, rendered.head ?? "")
       .replace(`<!--app-html-->`, rendered.html ?? "");
 

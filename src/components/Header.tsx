@@ -1,15 +1,17 @@
 import React, { FC, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { routes } from "../App";
 import { useSelector } from "react-redux";
 import { RootState } from "../state-management/store";
 import { Modal } from "react-responsive-modal";
 import { FormGroup } from "./FormGroup";
+import { serverUrl } from "../utils";
 
 export const Header: FC = () => {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const formElements = useSelector((state: RootState) => state.formElements);
+  const params = useParams();
 
   const isFormPage = () => {
     return location.pathname.split("/").includes("edit");
@@ -52,7 +54,28 @@ export const Header: FC = () => {
   };
 
   const handleSchemaSave = () => {
-    // fetch(serverUrl+"/forms/")
+    if (!params.id) {
+      alert("Invalid form id.");
+      return;
+    }
+
+    fetch(`${serverUrl}/forms/${params.id}`, {
+      method: "PUT",
+      body: JSON.stringify({ formElements }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((_data) => {
+        alert("Form schema saved successfully !");
+        window.location.reload();
+      })
+      .catch((e) => {
+        alert("Oops! Something went wrong. Please try again.");
+        console.log("Something went wrong !", e);
+      });
   };
   return (
     <header className="nav px-2">

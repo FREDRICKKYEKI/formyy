@@ -1,8 +1,9 @@
 # Formyy
 ***
 ## TO DO
-- change `form-data` to `form-schema` in TABLE: `forms`
-- create `formData` table
+<!-- - change `form-data` to `form-schema` in TABLE: `forms` ✅ -->
+<!-- - create `submissions` table ✅ -->
+- create form/:id route
 
 ## Pages
 

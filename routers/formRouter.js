@@ -21,6 +21,19 @@ formRouter.post("/new", isAuth, async (req, res) => {
   res.status(200).send({ form: form });
 });
 
+formRouter.put("/:id", isAuth, async (req, res) => {
+  const { formElements } = req.body;
+  const form = await Form.findOne({ where: { id: req.params.id } });
+  try {
+    form.form_schema = JSON.stringify(formElements);
+    await form.save();
+    res.status(200).send({ message: "Form updated successfully!" });
+  } catch (error) {
+    res.status(500).send({ message: "Error updating form" });
+    console.log(error);
+  }
+});
+
 formRouter.get("/:id", isAuth, async (req, res) => {
   const form = await Form.findOne({ where: { id: req.params.id } });
   res.status(200).send({ form: form });

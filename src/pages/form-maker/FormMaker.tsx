@@ -8,7 +8,6 @@ import { ElementSettings } from "./sections/ElementSettings";
 import FormElements from "./sections/FormElements";
 import { Header } from "../../components/Header";
 import { useParams } from "react-router-dom";
-import { serverUrl } from "../../utils";
 
 const FormMaker: FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);

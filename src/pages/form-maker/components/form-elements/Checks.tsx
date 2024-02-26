@@ -11,7 +11,7 @@ export const Checks: FC<CheckboxGroupProps> = ({ checks, ...props }) => {
       {checks.map((check) => (
         <div key={check.id} className="form-check">
           <label htmlFor={check.id} className="form-check-label">
-            {check.label}
+            {check.defaultValue}
           </label>
           <input
             type="checkbox"

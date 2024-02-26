@@ -13,6 +13,9 @@ export const Header: FC = () => {
       window.location.reload();
     }
   };
+  const handleSchemaSave = () => {
+    // fetch(serverUrl+"/forms/")
+  };
   return (
     <header className="nav px-2">
       <nav className="d-flex justify-content-between align-items-center w-100">
@@ -22,7 +25,7 @@ export const Header: FC = () => {
           </h1>
         </Link>
         <div className="me-3 d-flex gap-2 align-items-center">
-          <button className="px-2 btn btn-success">
+          <button onClick={handleSchemaSave} className="px-2 btn btn-success">
             <i className="fa fa-save "></i> Save
           </button>
           <button className="btn btn-primary">

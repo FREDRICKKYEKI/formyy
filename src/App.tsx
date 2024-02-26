@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import FormMaker from "./pages/form-maker/FormMaker";
+// import FormMaker from "./pages/form-maker/FormMaker"
 import SignUp from "./pages/sign-up/SignUp";
 import "react-responsive-modal/styles.css";
 import LogIn from "./pages/log-in/LogIn";
+import Home from "./pages/home/Home";
 
 export const routes = {
   home: "/",
@@ -15,7 +16,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path={routes.home} element={<FormMaker />} />
+        <Route path={routes.home} element={<Home />} />
         <Route path={routes.signUp} element={<SignUp />} />
         <Route path={routes.login} element={<LogIn />} />
         {/* <Route path={routes.forms} element={<FormMaker />} /> */}

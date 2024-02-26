@@ -19,8 +19,13 @@ export const generateToken = (user) => {
 };
 
 const getUserFromToken = (authorizationHeader) => {
-  if (authorizationHeader && authorizationHeader.startsWith("Bearer ")) {
+  if (
+    authorizationHeader &&
+    authorizationHeader.startsWith("Bearer ") &&
+    authorizationHeader.length > 7
+  ) {
     const token = authorizationHeader.slice(7);
+
     const decodedToken = jwt.verify(token, env.JWT_SECRET);
     if (decodedToken && decodedToken.id) {
       const user = {

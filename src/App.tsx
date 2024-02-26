@@ -4,12 +4,14 @@ import SignUp from "./pages/sign-up/SignUp";
 import "react-responsive-modal/styles.css";
 import LogIn from "./pages/log-in/LogIn";
 import Home from "./pages/home/Home";
+import FormMaker from "./pages/form-maker/FormMaker";
 
 export const routes = {
   home: "/",
   signUp: "/signup",
   login: "/login",
-  forms: "/forms/:id",
+  editForm: "/form/edit/:id/",
+  forms: "/form/:id",
 };
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
         <Route path={routes.home} element={<Home />} />
         <Route path={routes.signUp} element={<SignUp />} />
         <Route path={routes.login} element={<LogIn />} />
-        {/* <Route path={routes.forms} element={<FormMaker />} /> */}
+        <Route path={routes.editForm} element={<FormMaker />} />
         <Route path="*" element={<h1>Oops page not found!</h1>} />
       </Routes>
     </div>

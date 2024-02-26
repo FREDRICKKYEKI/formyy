@@ -1,8 +1,20 @@
-import { FC } from "react";
-import { Link } from "react-router-dom";
+import React, { FC, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { routes } from "../App";
+import { useSelector } from "react-redux";
+import { RootState } from "../state-management/store";
+import { Modal } from "react-responsive-modal";
+import { FormGroup } from "./FormGroup";
 
 export const Header: FC = () => {
+  const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const formElements = useSelector((state: RootState) => state.formElements);
+
+  const isFormPage = () => {
+    return location.pathname.split("/").includes("edit");
+  };
+
   const handleSignOut = () => {
     if (confirm("Are you sure you want to log out?")) {
       localStorage.removeItem("userInfo");
@@ -13,6 +25,32 @@ export const Header: FC = () => {
       window.location.reload();
     }
   };
+
+  const handleCreateNewForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const formData = {
+      title: form.get("formTitle"),
+      description: form.get("formDescription"),
+    };
+    fetch("http://localhost:5173/forms/new", {
+      method: "POST",
+      body: JSON.stringify({ ...formData, formElements }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(({ form }: any) => {
+        console.log(form.id);
+        window.location.href = `/form/edit/${form.id}`;
+      })
+      .catch((e) => {
+        console.log("Something went wrong !", e);
+      });
+  };
+
   const handleSchemaSave = () => {
     // fetch(serverUrl+"/forms/")
   };
@@ -25,10 +63,14 @@ export const Header: FC = () => {
           </h1>
         </Link>
         <div className="me-3 d-flex gap-2 align-items-center">
-          <button onClick={handleSchemaSave} className="px-2 btn btn-success">
+          <button
+            disabled={!isFormPage()}
+            onClick={handleSchemaSave}
+            className="px-2 btn btn-success"
+          >
             <i className="fa fa-save "></i> Save
           </button>
-          <button className="btn btn-primary">
+          <button onClick={() => setOpen(true)} className="btn btn-primary">
             <i className="fa fa-plus"></i> New Form
           </button>
           <Link to={routes.signUp}>
@@ -41,6 +83,37 @@ export const Header: FC = () => {
           </a>
         </div>
       </nav>
+      <Modal open={open} onClose={() => setOpen(!open)} center>
+        <h2 className="mt-4">Create New Form</h2>
+        <form onSubmit={handleCreateNewForm}>
+          <FormGroup>
+            <label htmlFor="formTitle">Form Title</label>
+            <input
+              type="text"
+              name="formTitle"
+              className="form-control"
+              id="formTitle"
+              required
+              placeholder="Enter form title"
+            />
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="formDescription">Form Description</label>
+            <textarea
+              className="form-control"
+              id="formDescription"
+              name="formDescription"
+              rows={5}
+              required
+              placeholder="Enter form description"
+            ></textarea>
+          </FormGroup>
+
+          <button type="submit" className="btn btn-primary w-100">
+            Create
+          </button>
+        </form>
+      </Modal>
     </header>
   );
 };

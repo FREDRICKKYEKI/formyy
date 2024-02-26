@@ -8,6 +8,7 @@ const Form = db.define(
       type: DataTypes.STRING(60),
       primaryKey: true,
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4(),
     },
     created_at: {
       type: DataTypes.DATE,

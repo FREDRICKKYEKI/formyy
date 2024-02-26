@@ -69,11 +69,12 @@ export const MainFormSection: FC = () => {
       <section className="form-preview">
         <form className="container px-5 w-100">
           <h3>Form Preview</h3>
-          {formElements.map((element: BaseFormElementProps, index: number) => (
-            <div key={element.id}>
-              {FormElement(element, index, handleDelete, dispatch)}
-            </div>
-          ))}
+          {formElements &&
+            formElements.map((element: BaseFormElementProps, index: number) => (
+              <div key={element.id}>
+                {FormElement(element, index, handleDelete, dispatch)}
+              </div>
+            ))}
         </form>
       </section>
     </main>

@@ -27,7 +27,7 @@ const Home: React.FC = () => {
       <div className="container">
         <h2>Your Forms</h2>
         {forms.length ? (
-          <table className="table table-dark">
+          <table className="table">
             <thead>
               <tr>
                 <th>id</th>
@@ -39,7 +39,9 @@ const Home: React.FC = () => {
             <tbody>
               {forms.map((row: any) => (
                 <tr>
-                  <td>{row.id}</td>
+                  <td>
+                    <a href={`form/edit/${row.id}`}>{row.id}</a>
+                  </td>
                   <td>{row.title}</td>
                   <td>{row.description}</td>
                   <td>{row.created_at}</td>

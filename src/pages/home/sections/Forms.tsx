@@ -9,21 +9,32 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
         <table className="table">
           <thead>
             <tr>
+              <th scope="col">#</th>
               <th>id</th>
               <th>title</th>
               <th>description</th>
               <th>created at</th>
+              <th>actions</th>
             </tr>
           </thead>
           <tbody>
-            {forms.map((row: any) => (
-              <tr>
+            {forms.map((row: any, index: number) => (
+              <tr key={row.id}>
+                <th scope="row">{index + 1}</th>
                 <td>
-                  <a href={`form/edit/${row.id}`}>{row.id}</a>
+                  <a href={`form/${row.id}/submissions/`}>{row.id}</a>
                 </td>
                 <td>{row.title}</td>
                 <td>{row.description}</td>
-                <td>{row.created_at}</td>
+                <td>{new Date(row.created_at).toDateString()}</td>
+                <td className="d-flex gap-3">
+                  <a href={`form/edit/${row.id}`}>
+                    <i className="fa fa-edit" title="Edit"></i>
+                  </a>
+                  <a href={`form/delete/${row.id}`}>
+                    <i className="fa fa-trash" title="Delete"></i>
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>

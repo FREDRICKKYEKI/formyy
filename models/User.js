@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../db_engine/db.js";
+import Form from "./Form.js";
 
 class User extends Model {}
 
@@ -57,3 +58,10 @@ User.init(
 );
 
 export default User;
+
+// relationship between User and Form
+User.hasMany(Form, {
+  foreignKey: "author_id",
+  onDelete: "CASCADE", // Cascade deletion
+  onUpdate: "CASCADE", // Cascade update
+});

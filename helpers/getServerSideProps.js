@@ -15,7 +15,6 @@ export default function getServerSideProps(req) {
     case "":
       const { cookies } = req;
       const user = jwt.verify(cookies.authToken, process.env.JWT_SECRET);
-      console.log(user);
       if (!user.id) return Promise.resolve();
       return new Promise((resolve) => {
         Form.findAll({ where: { author_id: user.id } })
@@ -23,6 +22,7 @@ export default function getServerSideProps(req) {
             resolve({ forms: forms });
           })
           .catch((err) => {
+            console.log(err);
             resolve({ forms: [] });
           });
       });

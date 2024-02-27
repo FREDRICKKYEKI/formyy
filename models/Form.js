@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import db from "../db_engine/db.js";
+import Submission from "./Submission.js";
 
 const Form = db.define(
   "Form",
@@ -50,3 +51,10 @@ const Form = db.define(
 );
 
 export default Form;
+
+// Define the relationship between the Form and Submission models
+Form.hasMany(Submission, {
+  foreignKey: "form_id",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});

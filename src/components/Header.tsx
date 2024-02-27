@@ -50,7 +50,6 @@ export const Header: FC = () => {
     })
       .then((res) => res.json())
       .then(({ form }: any) => {
-        console.log(form.id);
         window.location.href = `/form/edit/${form.id}`;
       })
       .catch((e) => {

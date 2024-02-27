@@ -61,7 +61,6 @@ authRouter.post("/signup", async (req, res) => {
 
 authRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log("email", email, "password", password);
 
   if (!email || !password) {
     return res.status(400).send({ error: "Email and password are required" });

@@ -14,7 +14,6 @@ const FormElements: FC<FormElementsProps> = ({ isOpen, setIsOpen }) => {
   const handleClick = (formElement: formElement) => {
     dispatch(setSelectedFormElement(formElement));
     setIsOpen(!isOpen);
-    console.log(formElement);
   };
 
   return (

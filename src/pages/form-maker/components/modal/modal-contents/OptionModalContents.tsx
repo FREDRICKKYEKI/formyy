@@ -67,7 +67,6 @@ export const OptionModalContents: FC<MainFormElementModalProps> = (props) => {
       required,
       options,
     });
-    console.log(data);
     props.handleFormElementsUpdate([...formElements, data]);
     props.onClose();
   };

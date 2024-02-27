@@ -37,14 +37,6 @@ const SignUp: FC = () => {
       });
   };
 
-  if (
-    typeof window !== undefined &&
-    JSON.parse(localStorage.getItem("userInfo") as string)
-  ) {
-    alert("You are already signed in!");
-    window.location.href = routes.home;
-  }
-
   return (
     <div className="">
       <Header />

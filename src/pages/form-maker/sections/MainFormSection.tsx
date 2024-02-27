@@ -65,10 +65,10 @@ export const MainFormSection: FC = () => {
   };
 
   return (
-    <main className="col-lg-6 col-sm-12">
+    <main className="col-lg-6 col-sm-12 p-2">
+      <h3>Form Preview</h3>
       <section className="form-preview">
-        <form className="container px-5 w-100">
-          <h3>Form Preview</h3>
+        <form className="container px-2 w-100 h-100">
           {formElements &&
             formElements.map((element: BaseFormElementProps, index: number) => (
               <div key={element.id}>
@@ -77,6 +77,31 @@ export const MainFormSection: FC = () => {
             ))}
         </form>
       </section>
+      <StyleSheet />
     </main>
+  );
+};
+
+const StyleSheet = () => {
+  return (
+    <style>
+      {`
+      .form-preview {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+      .form-preview::-webkit-scrollbar {
+        width: 9px;
+      }
+      .form-preview::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 10px;
+      }
+
+      `}
+    </style>
   );
 };

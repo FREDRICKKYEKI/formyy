@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { routes } from "../../App";
 import { FormGroup } from "../../components/FormGroup";
+import { Header } from "../../components/Header";
 
 const LogIn: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -35,43 +36,46 @@ const LogIn: React.FC = () => {
       });
   };
   return (
-    <form
-      onSubmit={handleLogIn}
-      className="container mw-500 form card p-4 mt-3"
-    >
-      <h4>Log In</h4>
-      <FormGroup>
-        <label className="mt-4" htmlFor="email">
-          Email:
-        </label>
-        <input
-          className="form-control"
-          name="email"
-          type="email"
-          id="email"
-          required
-        />
-      </FormGroup>
+    <>
+      <Header />
+      <form
+        onSubmit={handleLogIn}
+        className="container mw-500 form card p-4 mt-3"
+      >
+        <h4>Log In</h4>
+        <FormGroup>
+          <label className="mt-4" htmlFor="email">
+            Email:
+          </label>
+          <input
+            className="form-control"
+            name="email"
+            type="email"
+            id="email"
+            required
+          />
+        </FormGroup>
 
-      <FormGroup>
-        <label htmlFor="password">Password:</label>
-        <input
-          className="form-control"
-          name="password"
-          type="password"
-          id="password"
-          required
-        />
-      </FormGroup>
-      <button disabled={loading} type="submit" className="btn btn-primary">
-        Log In
-      </button>
-      <hr />
-      <p>
-        Do not have an account ? Feel free to{" "}
-        <a href={routes.signUp}>Sign Up</a>
-      </p>
-    </form>
+        <FormGroup>
+          <label htmlFor="password">Password:</label>
+          <input
+            className="form-control"
+            name="password"
+            type="password"
+            id="password"
+            required
+          />
+        </FormGroup>
+        <button disabled={loading} type="submit" className="btn btn-primary">
+          Log In
+        </button>
+        <hr />
+        <p>
+          Do not have an account ? Feel free to{" "}
+          <a href={routes.signUp}>Sign Up</a>
+        </p>
+      </form>
+    </>
   );
 };
 

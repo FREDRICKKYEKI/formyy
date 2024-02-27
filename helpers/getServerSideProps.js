@@ -8,10 +8,10 @@ import Form from "../models/Form.js";
 export default function getServerSideProps(url) {
   const baseUrl = url.split("/").slice(0, -1).join("/");
   switch (baseUrl) {
+    case "":
     case "/form/edit":
       const id = url.split("/").slice(-1)[0];
-      console.log(id);
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         Form.findOne({ where: { id: id } })
           .then((form) => {
             resolve({ form: form });

@@ -12,6 +12,11 @@ export const Header: FC = () => {
   const [open, setOpen] = useState(false);
   const formElements = useSelector((state: RootState) => state.formElements);
   const params = useParams();
+  const isAuthPage = () => {
+    const authPages = [routes.signUp, routes.login];
+
+    return authPages.includes(location.pathname);
+  };
 
   const isFormPage = () => {
     return location.pathname.split("/").includes("edit");
@@ -49,6 +54,7 @@ export const Header: FC = () => {
         window.location.href = `/form/edit/${form.id}`;
       })
       .catch((e) => {
+        alert("Oops! Something went wrong. Please try again.");
         console.log("Something went wrong !", e);
       });
   };
@@ -80,22 +86,26 @@ export const Header: FC = () => {
   return (
     <header className="nav px-2">
       <nav className="d-flex justify-content-between align-items-center w-100">
-        <Link to={routes.home} className="nav-brand text-decoration-none">
+        <a href={routes.home} className="nav-brand text-decoration-none">
           <h1>
             Formy<small>y</small>
           </h1>
-        </Link>
+        </a>
         <div className="me-3 d-flex gap-2 align-items-center">
-          <button
-            disabled={!isFormPage()}
-            onClick={handleSchemaSave}
-            className="px-2 btn btn-success"
-          >
-            <i className="fa fa-save "></i> Save
-          </button>
-          <button onClick={() => setOpen(true)} className="btn btn-primary">
-            <i className="fa fa-plus"></i> New Form
-          </button>
+          {!isAuthPage() && (
+            <>
+              <button
+                disabled={!isFormPage()}
+                onClick={handleSchemaSave}
+                className="px-2 btn btn-success"
+              >
+                <i className="fa fa-save "></i> Save
+              </button>
+              <button onClick={() => setOpen(true)} className="btn btn-primary">
+                <i className="fa fa-plus"></i> New Form
+              </button>
+            </>
+          )}
           <Link to={routes.signUp}>
             <button className="btn ">Sign Up | Log In</button>
           </Link>

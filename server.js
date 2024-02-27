@@ -3,10 +3,11 @@ import express from "express";
 import bodyParser from "body-parser";
 import User from "./models/User.js";
 import db from "./db_engine/db.js";
-import { generateToken } from "./utils.js";
+import handleProtectedRoutes, { generateToken } from "./utils.js";
 import { authRouter } from "./routers/authRouters.js";
 import { formRouter } from "./routers/formRouter.js";
 import getServerSideProps from "./helpers/getServerSideProps.js";
+import cookieParser from "cookie-parser";
 
 try {
   await db.authenticate();
@@ -30,9 +31,9 @@ const ssrManifest = isProduction
 
 // Create http server
 const app = express();
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 // Add Vite or respective production middlewares
 let vite;
 if (!isProduction) {
@@ -56,12 +57,16 @@ app.use("/auth", authRouter);
 // forms
 app.use("/forms", formRouter);
 
+// check status
 app.get("/status", (_req, res) => {
   res.status(200).send({ status: "ok" });
 });
 
+// Parse cookies
+app.use(cookieParser());
+
 // Serve HTML
-app.use("*", async (req, res) => {
+app.use("*", handleProtectedRoutes, async (req, res) => {
   const globalProps = { cookies: req.cookies };
 
   await getServerSideProps(req.originalUrl).then((data) => {

@@ -39,7 +39,7 @@ const ElementProperties: FC = () => {
 
 export const ElementSettings: FC = () => {
   return (
-    <div className=" r_sidebar col-lg-3 col-sm-12s">
+    <div className=" r_sidebar col-lg-3 col-sm-12s p-2">
       <div className="d-flex justify-content-between">
         <h3>Element Settings</h3>
       </div>
@@ -63,6 +63,13 @@ const StyleSheet = () => {
                 border: 1px solid #ccc;
                 height: 400px;
                 border-radius: 5px;
+            }
+            .element-properties::-webkit-scrollbar {
+              width: 9px;
+            }
+            .element-properties::-webkit-scrollbar-thumb {
+              background-color: #ccc;
+              border-radius: 10px;
             }
             `}
     </style>

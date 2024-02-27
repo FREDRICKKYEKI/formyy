@@ -22,10 +22,10 @@ const getUserFromToken = (authorizationHeader) => {
   if (
     authorizationHeader &&
     authorizationHeader.startsWith("Bearer ") &&
-    authorizationHeader.length > 7
+    authorizationHeader.length > 15
   ) {
     const token = authorizationHeader.slice(7);
-
+    console.log(authorizationHeader);
     const decodedToken = jwt.verify(token, env.JWT_SECRET);
     if (decodedToken && decodedToken.id) {
       const user = {
@@ -52,3 +52,17 @@ export const isAuth = (req, res, next) => {
   // call next to proceed to the next middleware or route handler
   next();
 };
+
+export default function handleProtectedRoutes(req, res, next) {
+  const { cookies } = req;
+  const unprotectedRoutes = ["/signup", "/login"];
+
+  if (unprotectedRoutes.includes(req.originalUrl)) {
+    return next();
+  }
+  console.log(cookies);
+  if (!cookies || !cookies.authToken) {
+    return res.status(401).redirect("/signup");
+  }
+  next();
+}

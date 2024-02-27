@@ -3,8 +3,12 @@
 ## TO DO
 <!-- - change `form-data` to `form-schema` in TABLE: `forms` ✅ -->
 <!-- - create `submissions` table ✅ -->
+- add view Submissions link to home table
+- create delete form/:id route
 - create form/:id route
-
+- create form/:id/submissions route
+- create form/:id/submissions/:id route
+- enable/disable form submissions (active/inactive)
 ## Pages
 
 * Form maker Interface

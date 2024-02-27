@@ -35,11 +35,18 @@ const FormMaker: FC = () => {
     <div className="w-100">
       <Header />
       <div className="row d-flex p-4 w-100">
-        <hr />
-        <h5>
-          {form?.title} - {form?.description}
-        </h5>
-        <hr />
+        <div className="d-flex justify-content-between">
+          <h5>
+            {form?.title} - {form?.description}
+          </h5>
+          <a
+            href={`/form/${form?.id}/submissions`}
+            target="_blank"
+            className=""
+          >
+            View Submissions
+          </a>
+        </div>
         <FormElements isOpen={isOpen} setIsOpen={setIsOpen} />
         <MainFormSection />
         <ElementSettings />

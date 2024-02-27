@@ -3,8 +3,8 @@ interface FormsProps {
 }
 
 const formState: { [key: string]: JSX.Element | string } = {
-  active: <span className="text-success">Active</span>,
-  inactive: <span className="text-danger">Inactive</span>,
+  active: <b className="text-success">Active</b>,
+  inactive: <b className="text-danger">Inactive</b>,
 };
 
 const Forms: React.FC<FormsProps> = ({ forms }) => {

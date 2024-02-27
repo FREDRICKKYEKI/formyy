@@ -55,6 +55,7 @@ const initialState: ReduxInitialState = {
   activeFormElement: null,
   forms: [],
   isClient: false,
+  form: {},
 };
 // Reducers
 

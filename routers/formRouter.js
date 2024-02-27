@@ -4,6 +4,27 @@ import { isAuth } from "../utils.js";
 
 export const formRouter = express.Router();
 
+formRouter.get("/statusChange/", isAuth, async (req, res) => {
+  const form = await Form.findOne({
+    where: {
+      id: req.query.id,
+      author_id: req.user.id,
+    },
+  });
+  if (!form) {
+    res.status(404).send("Form not found");
+    return;
+  }
+  try {
+    form.form_state = req.query.state;
+    await form.save();
+    res.status(200).redirect(`/form/edit/${form.id}`);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Error updating status" });
+  }
+});
+
 formRouter.get("/delete/:id", isAuth, async (req, res) => {
   console.log(req.params.id);
   const form = await Form.findOne({

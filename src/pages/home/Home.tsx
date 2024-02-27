@@ -1,43 +1,23 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy } from "react";
 import { Header } from "../../components/Header";
+import { useSelector } from "react-redux";
+import { RootState } from "../../state-management/store";
+
+const Forms = lazy(() => import("./sections/Forms"));
 
 const Home: React.FC = () => {
-  const [forms, setForms] = useState<any>([]);
-
-  useEffect(() => {
-    setForms((window as any)?.__GLOBAL_STATE__.forms || []);
-  }, []);
+  const forms = useSelector((state: RootState) => state.forms);
+  const isClient = useSelector((state: RootState) => state.isClient);
 
   return (
     <>
       <Header />
       <div className="container">
         <h2>Your Forms</h2>
-        {forms.length ? (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>title</th>
-                <th>description</th>
-                <th>created at</th>
-              </tr>
-            </thead>
-            <tbody>
-              {forms.map((row: any) => (
-                <tr>
-                  <td>
-                    <a href={`form/edit/${row.id}`}>{row.id}</a>
-                  </td>
-                  <td>{row.title}</td>
-                  <td>{row.description}</td>
-                  <td>{row.created_at}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <i>You dont have any forms yet. Please create some</i>
+        {isClient && (
+          <Suspense fallback={<div>Loading forms...</div>}>
+            <Forms forms={forms} />
+          </Suspense>
         )}
       </div>
     </>

@@ -5,6 +5,9 @@ import "react-responsive-modal/styles.css";
 import LogIn from "./pages/log-in/LogIn";
 import Home from "./pages/home/Home";
 import FormMaker from "./pages/form-maker/FormMaker";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setIsClient } from "./state-management/store";
 
 export const routes = {
   home: "/",
@@ -13,8 +16,13 @@ export const routes = {
   editForm: "/form/edit/:id/",
   forms: "/form/:id",
 };
-
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setIsClient(true));
+  }, []);
+
   return (
     <div>
       <Routes>

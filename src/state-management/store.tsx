@@ -1,12 +1,13 @@
 import { Reducer, configureStore } from "@reduxjs/toolkit";
 import { BaseFormElementProps, ReduxInitialState, formElement } from "../types";
-import { FormInput } from "../DataModels";
 
 const ACTIONS = {
   // ACTIONS
   SET_SELECTED_FORM_ELEMENT: "SET_SELECTED_FORM_ELEMENT",
   SET_FORM_ELEMENTS: "SET_FORM_ELEMENTS",
   SET_ACTIVE_FORM_ELEMENT: "SET_ACTIVE_FORM_ELEMENT",
+  SET_FORMS: "SET_FORMS",
+  SET_IS_CLIENT: "SET_IS_CLIENT",
 };
 
 // action creators
@@ -33,11 +34,27 @@ export const setActiveFormElement = (
   };
 };
 
+export const setForms = (forms: any) => {
+  return {
+    type: ACTIONS.SET_FORMS,
+    payload: forms,
+  };
+};
+
+export const setIsClient = (isClient: boolean) => {
+  return {
+    type: ACTIONS.SET_IS_CLIENT,
+    payload: isClient,
+  };
+};
+
 // initial state
 const initialState: ReduxInitialState = {
   selectedFormElement: "input",
   formElements: [],
   activeFormElement: null,
+  forms: [],
+  isClient: false,
 };
 // Reducers
 
@@ -60,6 +77,16 @@ export const reducer = (
       return {
         ...state,
         activeFormElement: payload,
+      };
+    case ACTIONS.SET_FORMS:
+      return {
+        ...state,
+        forms: payload,
+      };
+    case ACTIONS.SET_IS_CLIENT:
+      return {
+        ...state,
+        isClient: payload,
       };
     default:
       return state;

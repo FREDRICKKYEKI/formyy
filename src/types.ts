@@ -11,6 +11,8 @@ export interface ReduxInitialState {
   selectedFormElement: formElement;
   formElements: BaseFormElementProps[];
   activeFormElement: BaseFormElementProps | null;
+  forms: any[];
+  isClient: boolean;
 }
 
 /**

@@ -42,7 +42,7 @@ export const Header: FC = () => {
     };
     fetch("http://localhost:5173/forms/new", {
       method: "POST",
-      body: JSON.stringify({ ...formData, formElements }),
+      body: JSON.stringify({ ...formData, formElements: [] }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,

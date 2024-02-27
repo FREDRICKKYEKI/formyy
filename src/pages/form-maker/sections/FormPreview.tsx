@@ -8,6 +8,7 @@ import { Checks } from "../components/form-elements/Checks";
 import { Input } from "../components/form-elements/Input";
 import { Select } from "../components/form-elements/Select";
 import { TextArea } from "../components/form-elements/TextArea";
+import { emptyStateImg } from "../../../utils";
 
 interface FormPreviewProps {
   formElements: BaseFormElementProps[];
@@ -68,12 +69,23 @@ const FormPreview: React.FC<FormPreviewProps> = ({ formElements }) => {
   return (
     <section className="form-preview">
       <form className="container px-2 w-100 h-100">
-        {formElements &&
+        {formElements.length ? (
           formElements?.map((element: BaseFormElementProps, index: number) => (
             <div key={element.id}>
               {FormElement(element, index, handleDelete, dispatch)}
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="d-flex flex-column align-items-center">
+            <img
+              src={emptyStateImg}
+              alt=""
+              width={200}
+              className="empty state"
+            />
+            <p className="text-center w-100">Create new a form</p>
+          </div>
+        )}
       </form>
     </section>
   );

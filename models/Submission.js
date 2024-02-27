@@ -6,9 +6,10 @@ class Submission extends Model {}
 Submission.init(
   {
     id: {
-      type: DataTypes.STRING(60),
+      type: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
+      defaultValue: DataTypes.UUIDV4(),
     },
     form_id: {
       type: DataTypes.STRING(60),
@@ -26,6 +27,7 @@ Submission.init(
     user_id: {
       type: DataTypes.STRING(60),
       allowNull: false,
+      unique: true,
     },
     submission_data: {
       type: DataTypes.TEXT,

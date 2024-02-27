@@ -76,7 +76,6 @@ export default function getServerSideProps(req) {
       return new Promise((resolve) => {
         Form.findOne({ where: { id: form_id, author_id: user.id } })
           .then((form) => {
-            console.log(form);
             resolve({ form: form });
           })
           .catch((err) => {

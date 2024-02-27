@@ -2,6 +2,11 @@ interface FormsProps {
   forms: any[];
 }
 
+const formState: { [key: string]: JSX.Element | string } = {
+  active: <span className="text-success">Active</span>,
+  inactive: <span className="text-danger">Inactive</span>,
+};
+
 const Forms: React.FC<FormsProps> = ({ forms }) => {
   return (
     <>
@@ -11,10 +16,12 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
             <tr>
               <th scope="col">#</th>
               <th>id</th>
-              <th>title</th>
-              <th>description</th>
-              <th>created at</th>
-              <th>actions</th>
+              <th>State</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Created on</th>
+              <th>Expires on</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -29,9 +36,15 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
                     {row.id}
                   </a>
                 </td>
+                <td>{formState[row.form_state]}</td>
                 <td>{row.title}</td>
                 <td>{row.description}</td>
                 <td>{new Date(row.created_at).toDateString()}</td>
+                <td>
+                  {row.decay_date
+                    ? new Date(row.decay_date).toDateString()
+                    : "N/A"}
+                </td>
                 <td className="d-flex gap-3">
                   <a href={`form/edit/${row.id}`}>
                     <i className="fa fa-edit" title="Edit"></i>

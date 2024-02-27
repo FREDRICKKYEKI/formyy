@@ -40,6 +40,15 @@ const Form = db.define(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    decay_date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    form_state: {
+      type: DataTypes.ENUM("active", "inactive"),
+      allowNull: false,
+      defaultValue: "active",
+    },
   },
   {
     sequelize: db,

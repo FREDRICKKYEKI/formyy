@@ -4,11 +4,11 @@
 <!-- - change `form-data` to `form-schema` in TABLE: `forms` ✅ -->
 <!-- - create `submissions` table ✅ -->
 <!-- - create form/delete/:id route ✅-->
+- enable/disable form submissions (active/inactive)
 - add view Submissions link to home table
 - create form/:id route
 - create form/:id/submissions route
 - create form/:id/submissions/:id route
-- enable/disable form submissions (active/inactive)
 -
 ## Pages
 
@@ -53,6 +53,8 @@ CREATE TABLE IF NOT EXISTS forms (
     description TEXT,
 	author_id VARCHAR(60) NOT NULL,
 	form_shema TEXT NOT NULL,
+    decay_date DATETIME, -- Decay date column
+    form_state ENUM('active', 'inactive') DEFAULT 'active' NOT NULL, -- Form state column
 	FOREIGN KEY (author_id) REFERENCES users(id)
 );
 

@@ -39,7 +39,9 @@ export const Header: FC = () => {
     const formData = {
       title: form.get("formTitle"),
       description: form.get("formDescription"),
+      decayDate: form.get("formDecayDate"),
     };
+
     fetch("http://localhost:5173/forms/new", {
       method: "POST",
       body: JSON.stringify({ ...formData, formElements: [] }),
@@ -115,8 +117,13 @@ export const Header: FC = () => {
           </a>
         </div>
       </nav>
-      <Modal open={open} onClose={() => setOpen(!open)} center>
-        <h2 className="mt-4">Create New Form</h2>
+      <Modal
+        styles={{ modal: { borderRadius: "10px", width: "500px" } }}
+        open={open}
+        onClose={() => setOpen(!open)}
+        center
+      >
+        <h4 className="mt-4">Create New Form</h4>
         <form onSubmit={handleCreateNewForm}>
           <FormGroup>
             <label htmlFor="formTitle">Form Title</label>
@@ -127,6 +134,26 @@ export const Header: FC = () => {
               id="formTitle"
               required
               placeholder="Enter form title"
+            />
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="formTitle">Expiration Date</label>
+            <input
+              type="date"
+              name="formDecayDate"
+              className="form-control"
+              id="formTitle"
+              required
+              onChange={(e) => {
+                // check if is not before today
+                const today = new Date();
+                const selectedDate = new Date(e.target.value);
+                if (selectedDate <= today) {
+                  alert("Please select a date after today.");
+                  e.target.value = "";
+                }
+              }}
+              placeholder="Enter decay date..."
             />
           </FormGroup>
           <FormGroup>

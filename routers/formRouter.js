@@ -34,10 +34,11 @@ formRouter.get("/my-forms", isAuth, async (req, res) => {
 });
 
 formRouter.post("/new", isAuth, async (req, res) => {
-  const { title, description, formElements } = req.body;
+  const { title, description, formElements, decayDate } = req.body;
   const form = await Form.create({
     title,
     description,
+    decay_date: new Date(decayDate),
     form_schema: JSON.stringify(formElements),
     author_id: req.user.id,
   });

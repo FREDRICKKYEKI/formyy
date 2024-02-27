@@ -32,7 +32,12 @@ export const MainFormElementModal: FC<MainFormElementModalProps> = (props) => {
     (state: RootState) => state.selectedFormElement
   );
   return (
-    <Modal center {...props} classNames={{ root: "p-5" }}>
+    <Modal
+      styles={{ modal: { borderRadius: "10px", width: "500px" } }}
+      center
+      {...props}
+      classNames={{ root: "p-5" }}
+    >
       <div className="mt-3">
         {ModalContentMap[selectedFormElement || "input"](props)}
       </div>

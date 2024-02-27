@@ -39,13 +39,29 @@ export const getUserFromToken = (authorizationHeader) => {
   return { id: null, email: null, role: null };
 };
 
+/**
+ *
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {import("express").NextFunction} next - The next function.
+ * @returns
+ */
 export const isAuth = (req, res, next) => {
   // get the user from the token
-  const user = getUserFromToken(req.headers.authorization);
+
+  const { cookies } = req;
+  console.log("cookies", req.url, req.cookie);
+  if (!cookies || !cookies.authToken) {
+    return res.status(401).send({ error: "Unauthorized" });
+  }
+
+  const user = jwt.verify(cookies.authToken, env.JWT_SECRET);
+
   // if the user is not found, return an unauthorized error
   if (user.id === null) {
     return res.status(401).send({ error: "Unauthorized" });
   }
+
   // set the user object on the request object
   req.user = user;
   // call next to proceed to the next middleware or route handler

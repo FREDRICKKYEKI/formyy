@@ -51,6 +51,9 @@ if (!isProduction) {
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
 
+// Parse cookies
+app.use(cookieParser());
+
 // auth
 app.use("/auth", authRouter);
 
@@ -61,9 +64,6 @@ app.use("/forms", formRouter);
 app.get("/status", (_req, res) => {
   res.status(200).send({ status: "ok" });
 });
-
-// Parse cookies
-app.use(cookieParser());
 
 // Serve HTML
 app.use("*", handleProtectedRoutes, async (req, res) => {

@@ -22,7 +22,12 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
               <tr key={row.id}>
                 <th scope="row">{index + 1}</th>
                 <td>
-                  <a href={`form/${row.id}/submissions/`}>{row.id}</a>
+                  <a
+                    title="View Submissions"
+                    href={`form/${row.id}/submissions/`}
+                  >
+                    {row.id}
+                  </a>
                 </td>
                 <td>{row.title}</td>
                 <td>{row.description}</td>
@@ -31,7 +36,7 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
                   <a href={`form/edit/${row.id}`}>
                     <i className="fa fa-edit" title="Edit"></i>
                   </a>
-                  <a href={`form/delete/${row.id}`}>
+                  <a href={`forms/delete/${row.id}`}>
                     <i className="fa fa-trash" title="Delete"></i>
                   </a>
                 </td>

@@ -4,8 +4,18 @@ import { isAuth } from "../utils.js";
 
 export const formRouter = express.Router();
 
-formRouter.delete("/:id", isAuth, async (req, res) => {
-  const form = await Form.findOne({ where: { id: req.params.id } });
+formRouter.get("/delete/:id", isAuth, async (req, res) => {
+  console.log(req.params.id);
+  const form = await Form.findOne({
+    where: {
+      id: req.params.id,
+      author_id: req.user.id,
+    },
+  });
+  if (!form) {
+    res.status(404).send("Form not found");
+    return;
+  }
   try {
     await form.destroy();
     res.status(200).redirect("/");
@@ -13,13 +23,13 @@ formRouter.delete("/:id", isAuth, async (req, res) => {
     console.log(error);
     res.status(500).send("Error deleting form <a href='/'>Go back</a>");
   }
-  // just for safety
-  await form.destroy();
-  res.status(200).send({ message: "Form deleted successfully!" });
 });
 
 formRouter.get("/my-forms", isAuth, async (req, res) => {
-  const forms = await Form.findAll({ where: { author_id: req.user.id } });
+  const forms = await Form.findAll({
+    where: { author_id: req.user.id },
+    order: [["created_at", "DESC"]],
+  });
   res.status(200).send({ forms: forms });
 });
 

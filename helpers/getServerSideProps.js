@@ -17,7 +17,10 @@ export default function getServerSideProps(req) {
       const user = jwt.verify(cookies.authToken, process.env.JWT_SECRET);
       if (!user.id) return Promise.resolve();
       return new Promise((resolve) => {
-        Form.findAll({ where: { author_id: user.id } })
+        Form.findAll({
+          where: { author_id: user.id },
+          order: [["created_at", "DESC"]], // Sort by created_at in descending order
+        })
           .then((forms) => {
             resolve({ forms: forms });
           })

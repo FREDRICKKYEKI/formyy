@@ -3,7 +3,7 @@
 ## TO DO
 <!-- - change `form-data` to `form-schema` in TABLE: `forms` ✅ -->
 <!-- - create `submissions` table ✅ -->
-- create delete form/:id route
+<!-- - create form/delete/:id route ✅-->
 - add view Submissions link to home table
 - create form/:id route
 - create form/:id/submissions route

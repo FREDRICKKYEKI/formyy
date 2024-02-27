@@ -8,14 +8,17 @@ import FormMaker from "./pages/form-maker/FormMaker";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setIsClient } from "./state-management/store";
+import Form from "./pages/form/Form";
 
 export const routes = {
   home: "/",
   signUp: "/signup",
   login: "/login",
+  form: "/form/:id/",
   editForm: "/form/edit/:id/",
   forms: "/form/:id",
 };
+
 function App() {
   const dispatch = useDispatch();
 
@@ -30,7 +33,15 @@ function App() {
         <Route path={routes.signUp} element={<SignUp />} />
         <Route path={routes.login} element={<LogIn />} />
         <Route path={routes.editForm} element={<FormMaker />} />
-        <Route path="*" element={<h1>Oops page not found!</h1>} />
+        <Route path={routes.form} element={<Form />} />
+        <Route
+          path="*"
+          element={
+            <h3 className="m-5">
+              😢Oops page not found! <a href="/">Go back to home</a>
+            </h3>
+          }
+        />
       </Routes>
     </div>
   );

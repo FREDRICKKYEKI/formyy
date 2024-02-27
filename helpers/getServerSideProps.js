@@ -9,12 +9,21 @@ import jwt from "jsonwebtoken";
  * @returns {Promise} - A promise that resolves with the server-side props data.
  */
 export default function getServerSideProps(req) {
-  const url = req.originalUrl;
+  let url = req.originalUrl;
+  if (url.endsWith("/")) url = url.slice(0, -1); // Remove trailing slash (if any)
   const baseUrl = url.split("/").slice(0, -1).join("/");
+
+  const { cookies } = req;
+  let user = {};
+
+  if (!cookies || !cookies.authToken) {
+    return Promise.resolve();
+  }
+
+  user = jwt.verify(cookies.authToken, process.env.JWT_SECRET);
+  console.log(url, baseUrl);
   switch (baseUrl) {
     case "":
-      const { cookies } = req;
-      const user = jwt.verify(cookies.authToken, process.env.JWT_SECRET);
       if (!user.id) return Promise.resolve();
       return new Promise((resolve) => {
         Form.findAll({
@@ -29,10 +38,27 @@ export default function getServerSideProps(req) {
             resolve({ forms: [] });
           });
       });
-    case "/form/edit":
-      const id = url.split("/").slice(-1)[0];
+    case "/form":
+      let form_id = url.split("/").slice(-1)[0];
+      console.log(form_id);
       return new Promise((resolve) => {
-        Form.findOne({ where: { id: id } })
+        Form.findOne({ where: { id: form_id } })
+          .then((form) => {
+            resolve({ form: form, formElements: form.form_schema });
+          })
+          .catch((err) => {
+            resolve({ form: {}, formElements: {} });
+          });
+      });
+    case "/form/edit":
+      let id = url.split("/").slice(-1)[0];
+      return new Promise((resolve) => {
+        Form.findOne({
+          where: {
+            id: id,
+            author_id: user.id,
+          },
+        })
           .then((form) => {
             resolve({ form: form, formElements: form.form_schema });
           })

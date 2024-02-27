@@ -14,7 +14,7 @@ interface FormPreviewProps {
   formElements: BaseFormElementProps[];
 }
 
-const formElementMap: {
+export const formElementMap: {
   [key: string]: (element: BaseFormElementProps) => JSX.Element;
 } = {
   input: (element: any) => <Input {...element} />,

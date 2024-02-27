@@ -17,6 +17,7 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
               <th scope="col">#</th>
               <th>id</th>
               <th>State</th>
+              <th>Link</th>
               <th>Title</th>
               <th>Description</th>
               <th>Created on</th>
@@ -37,6 +38,9 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
                   </a>
                 </td>
                 <td>{formState[row.form_state]}</td>
+                <td>
+                  <a href={`form/${row.id}/`}>View</a>
+                </td>
                 <td>{row.title}</td>
                 <td>{row.description}</td>
                 <td>{new Date(row.created_at).toDateString()}</td>

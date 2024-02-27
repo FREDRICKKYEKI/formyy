@@ -13,7 +13,7 @@ const Home: React.FC = () => {
     <>
       <Header />
       <div className="p-2">
-        <h2>Your Forms</h2>
+        <h3>Your Forms</h3>
         {isClient && (
           <Suspense fallback={<div>Loading forms...</div>}>
             <Forms forms={forms} />

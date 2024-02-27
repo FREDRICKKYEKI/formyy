@@ -50,7 +50,6 @@ export const isAuth = (req, res, next) => {
   // get the user from the token
 
   const { cookies } = req;
-  console.log("cookies", req.url, req.cookie);
   if (!cookies || !cookies.authToken) {
     return res.status(401).send({ error: "Unauthorized" });
   }
@@ -68,15 +67,27 @@ export const isAuth = (req, res, next) => {
   next();
 };
 
+/**
+ *
+ * @param {Request} req - The request object.
+ * @param {Response} res - The response object.
+ * @param {import("express").NextFunction} next - The next function.
+ * @returns - The next function or a redirect to the signup page.
+ */
 export default function handleProtectedRoutes(req, res, next) {
   const { cookies } = req;
   const unprotectedRoutes = ["/signup", "/login"];
+  const baseUrl = req.originalUrl.split("?")[0];
 
-  if (unprotectedRoutes.includes(req.originalUrl)) {
+  if (unprotectedRoutes.includes(baseUrl)) {
     return next();
   }
+
   if (!cookies || !cookies.authToken) {
-    return res.status(401).redirect("/signup");
+    console.log(req.originalUrl);
+    return res
+      .status(401)
+      .redirect(`/signup?redirectFrom=${encodeURIComponent(req.originalUrl)}`);
   }
   next();
 }

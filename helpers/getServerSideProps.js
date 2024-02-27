@@ -15,13 +15,12 @@ export default function getServerSideProps(req) {
 
   const { cookies } = req;
   let user = {};
-
+  // all server-side props are protected
   if (!cookies || !cookies.authToken) {
     return Promise.resolve();
   }
 
   user = jwt.verify(cookies.authToken, process.env.JWT_SECRET);
-  console.log(url, baseUrl);
   switch (baseUrl) {
     case "":
       if (!user.id) return Promise.resolve();

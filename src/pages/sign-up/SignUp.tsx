@@ -2,13 +2,20 @@ import { FC, FormEvent, useRef, useState } from "react";
 import { FormGroup } from "../../components/FormGroup";
 import { routes } from "../../App";
 import { Header } from "../../components/Header";
+import { useSearchParams } from "react-router-dom";
 
 const SignUp: FC = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const [valid, setValid] = useState<boolean | any>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
+  let [searchParams, _setSearchParams] = useSearchParams();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const createURl = (url: string) => {
+    // check if there are any query params and if there are, append them to the url
+    return url + "?" + searchParams.toString();
+  };
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     if (!valid) {
@@ -28,14 +35,14 @@ const SignUp: FC = () => {
       .then((_data: unknown) => {
         setLoading(false);
         alert("User created successfully!");
-        window.location.href = routes.login;
+        window.location.href = createURl(routes.login);
       })
       .catch((err) => {
         setLoading(false);
         console.log(err);
         alert("Oops! Something went wrong. Please try again.");
       });
-  };
+  }
 
   return (
     <div className="">
@@ -44,7 +51,7 @@ const SignUp: FC = () => {
         onSubmit={handleSubmit}
         className="form card p-4 mt-3 container mw-500"
         method="POST"
-        action="/auth/signup"
+        // action="/auth/signup"
       >
         <h3>Sign Up</h3>
         <strong>
@@ -115,7 +122,7 @@ const SignUp: FC = () => {
         <hr />
         <p>
           Already have an account ? Feel free to{" "}
-          <a href={routes.login}>Log In</a>
+          <a href={createURl(routes.login)}>Log In</a>
         </p>
       </form>
     </div>

@@ -8,6 +8,7 @@ import { authRouter } from "./routers/authRouters.js";
 import { formRouter } from "./routers/formRouter.js";
 import getServerSideProps from "./helpers/getServerSideProps.js";
 import cookieParser from "cookie-parser";
+import { miscRouter } from "./routers/miscRouter.js";
 
 try {
   await db.authenticate();
@@ -51,6 +52,9 @@ if (!isProduction) {
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
 
+// miscelleneous routes
+app.use("/", miscRouter);
+
 // Parse cookies
 app.use(cookieParser());
 
@@ -59,11 +63,6 @@ app.use("/auth", authRouter);
 
 // forms
 app.use("/forms", formRouter);
-
-// check status
-app.get("/status", (_req, res) => {
-  res.status(200).send({ status: "ok" });
-});
 
 // Serve HTML
 app.use("*", handleProtectedRoutes, async (req, res) => {

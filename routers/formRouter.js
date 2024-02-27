@@ -47,29 +47,39 @@ formRouter.get("/delete/:id", isAuth, async (req, res) => {
 });
 
 formRouter.get("/my-forms", isAuth, async (req, res) => {
-  const forms = await Form.findAll({
-    where: { author_id: req.user.id },
-    order: [["created_at", "DESC"]],
-  });
-  res.status(200).send({ forms: forms });
+  try {
+    const forms = await Form.findAll({
+      where: { author_id: req.user.id },
+      order: [["created_at", "DESC"]],
+    });
+    res.status(200).send({ forms: forms });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Error fetching forms" });
+  }
 });
 
 formRouter.post("/new", isAuth, async (req, res) => {
   const { title, description, formElements, decayDate } = req.body;
-  const form = await Form.create({
-    title,
-    description,
-    decay_date: new Date(decayDate),
-    form_schema: JSON.stringify(formElements),
-    author_id: req.user.id,
-  });
-  res.status(200).send({ form: form });
+  try {
+    const form = await Form.create({
+      title,
+      description,
+      decay_date: new Date(decayDate),
+      form_schema: JSON.stringify(formElements),
+      author_id: req.user.id,
+    });
+    res.status(200).send({ form: form });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Error creating form" });
+  }
 });
 
 formRouter.put("/:id", isAuth, async (req, res) => {
   const { formElements } = req.body;
-  const form = await Form.findOne({ where: { id: req.params.id } });
   try {
+    const form = await Form.findOne({ where: { id: req.params.id } });
     form.form_schema = JSON.stringify(formElements);
     await form.save();
     res.status(200).send({ message: "Form updated successfully!" });
@@ -80,6 +90,11 @@ formRouter.put("/:id", isAuth, async (req, res) => {
 });
 
 formRouter.get("/:id", isAuth, async (req, res) => {
-  const form = await Form.findOne({ where: { id: req.params.id } });
-  res.status(200).send({ form: form });
+  try {
+    const form = await Form.findOne({ where: { id: req.params.id } });
+    res.status(200).send({ form: form });
+  } catch (error) {
+    res.status(500).send({ message: "Error fetching form" });
+    console.log(error);
+  }
 });

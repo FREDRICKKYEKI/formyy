@@ -1,24 +1,11 @@
 import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
-import { serverUrl } from "../../utils";
 
 const Home: React.FC = () => {
   const [forms, setForms] = useState<any>([]);
 
   useEffect(() => {
-    fetch(serverUrl + "/forms/my-forms", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data: any) => {
-        setForms(data.forms);
-      })
-      .catch((_e) => {
-        console.log("Something went wrong !");
-      });
+    setForms((window as any)?.__GLOBAL_STATE__.forms || []);
   }, []);
 
   return (

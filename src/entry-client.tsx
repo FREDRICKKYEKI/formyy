@@ -3,8 +3,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Provider } from "react-redux";
-import { store } from "./state-management/store";
+import { reducer } from "./state-management/store";
 import { BrowserRouter } from "react-router-dom";
+import { configureStore } from "@reduxjs/toolkit";
+
+const store = configureStore({
+  reducer: reducer,
+  preloadedState: (window as any).__GLOBAL_STATE__,
+});
 
 ReactDOM.hydrateRoot(
   document.getElementById("root") as HTMLElement,

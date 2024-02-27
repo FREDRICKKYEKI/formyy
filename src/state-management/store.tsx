@@ -36,12 +36,12 @@ export const setActiveFormElement = (
 // initial state
 const initialState: ReduxInitialState = {
   selectedFormElement: "input",
-  formElements: [FormInput],
+  formElements: [],
   activeFormElement: null,
 };
 // Reducers
 
-const reducer = (
+export const reducer = (
   state = initialState,
   { type, payload }: { type: string; payload: string }
 ) => {

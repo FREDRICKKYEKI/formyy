@@ -33,7 +33,9 @@ export const MainFormElementModal: FC<MainFormElementModalProps> = (props) => {
   );
   return (
     <Modal center {...props} classNames={{ root: "p-5" }}>
-      <div className="mt-3">{ModalContentMap[selectedFormElement](props)}</div>
+      <div className="mt-3">
+        {ModalContentMap[selectedFormElement || "input"](props)}
+      </div>
     </Modal>
   );
 };

@@ -18,14 +18,13 @@ export const generateToken = (user) => {
   );
 };
 
-const getUserFromToken = (authorizationHeader) => {
+export const getUserFromToken = (authorizationHeader) => {
   if (
     authorizationHeader &&
     authorizationHeader.startsWith("Bearer ") &&
     authorizationHeader.length > 15
   ) {
     const token = authorizationHeader.slice(7);
-    console.log(authorizationHeader);
     const decodedToken = jwt.verify(token, env.JWT_SECRET);
     if (decodedToken && decodedToken.id) {
       const user = {
@@ -60,7 +59,6 @@ export default function handleProtectedRoutes(req, res, next) {
   if (unprotectedRoutes.includes(req.originalUrl)) {
     return next();
   }
-  console.log(cookies);
   if (!cookies || !cookies.authToken) {
     return res.status(401).redirect("/signup");
   }

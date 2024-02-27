@@ -69,7 +69,7 @@ app.use(cookieParser());
 app.use("*", handleProtectedRoutes, async (req, res) => {
   const globalProps = { cookies: req.cookies };
 
-  await getServerSideProps(req.originalUrl).then((data) => {
+  await getServerSideProps(req).then((data) => {
     Object.assign(globalProps, data);
   });
 

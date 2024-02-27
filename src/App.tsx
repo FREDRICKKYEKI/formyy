@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setIsClient } from "./state-management/store";
 import Form from "./pages/form/Form";
+import Success from "./pages/success/Success";
 
 export const routes = {
   home: "/",
@@ -17,6 +18,7 @@ export const routes = {
   form: "/form/:id/",
   editForm: "/form/edit/:id/",
   forms: "/form/:id",
+  success: "/success",
 };
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
         <Route path={routes.login} element={<LogIn />} />
         <Route path={routes.editForm} element={<FormMaker />} />
         <Route path={routes.form} element={<Form />} />
+        <Route path={routes.success} element={<Success />} />
         <Route
           path="*"
           element={

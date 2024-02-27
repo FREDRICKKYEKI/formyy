@@ -16,7 +16,7 @@ export const Checks: FC<CheckboxGroupProps> = ({ checks, ...props }) => {
           <input
             type="checkbox"
             id={check.id}
-            name={check.name}
+            name={check.id}
             value={check.defaultValue}
             className="form-check-input"
           />

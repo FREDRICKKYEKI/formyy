@@ -1,6 +1,7 @@
 import express from "express";
 import Form from "../models/Form.js";
 import { isAuth } from "../utils.js";
+import Submission from "../models/Submission.js";
 
 export const formRouter = express.Router();
 
@@ -97,4 +98,30 @@ formRouter.get("/:id", isAuth, async (req, res) => {
     res.status(500).send({ message: "Error fetching form" });
     console.log(error);
   }
+});
+
+formRouter.post("/submissions", isAuth, async (req, res) => {
+  const { form_id, submission_data } = req.query;
+  if (!form_id || !submission_data) {
+    res.status(400).send("Invalid request");
+    return;
+  }
+  res.status(200).redirect(`/success?form_id=${form_id}`);
+
+  // Submission.create({
+  //   form_id: form_Id,
+  //   user_id: req.user.id,
+  //   submission_data: submission_data,
+  // })
+  //   .then(() => {
+  //     res.status(200).redirect(`/success?form_id=${form_Id}`);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     res
+  //       .status(500)
+  //       .send(
+  //         "Error submitting form. <a href='#' onclick='window.history.back();'>Go back</a>"
+  //       );
+  //   });
 });

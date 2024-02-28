@@ -127,3 +127,23 @@ formRouter.post("/submissions", isAuth, async (req, res) => {
         );
     });
 });
+
+formRouter.get("/:id/submissions/:sub_id/delete", isAuth, async (req, res) => {
+  const submission = await Submission.findOne({
+    where: {
+      id: req.params.sub_id,
+      user_id: req.user.id,
+    },
+  });
+  if (!submission) {
+    res.status(404).send("Submission not found");
+    return;
+  }
+  try {
+    await submission.destroy();
+    res.status(200).redirect(`/form/${req.params.id}/submissions`);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error deleting submission");
+  }
+});

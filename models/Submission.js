@@ -43,4 +43,5 @@ Submission.init(
     underscored: true, // Set to true if your database column names use snake_case
   }
 );
+
 export default Submission;

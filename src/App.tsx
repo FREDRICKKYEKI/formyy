@@ -10,15 +10,17 @@ import { useDispatch } from "react-redux";
 import { setIsClient } from "./state-management/store";
 import Form from "./pages/form/Form";
 import Success from "./pages/success/Success";
+import Submissions from "./pages/submissions/Submissions";
 
 export const routes = {
   home: "/",
   signUp: "/signup",
   login: "/login",
+  success: "/success",
   form: "/form/:id/",
   editForm: "/form/edit/:id/",
-  forms: "/form/:id",
-  success: "/success",
+  all_submissions: "form/submissions",
+  form_submissions: "/form/:id/submissions/",
 };
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
         <Route path={routes.editForm} element={<FormMaker />} />
         <Route path={routes.form} element={<Form />} />
         <Route path={routes.success} element={<Success />} />
+        <Route path={routes.form_submissions} element={<Submissions />} />
         <Route
           path="*"
           element={

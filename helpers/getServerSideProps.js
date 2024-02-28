@@ -1,5 +1,6 @@
 import Form from "../models/Form.js";
 import Submission from "../models/Submission.js";
+import User from "../models/User.js";
 import { getUserFromToken } from "../utils.js";
 
 import jwt from "jsonwebtoken";
@@ -59,6 +60,43 @@ export default function getServerSideProps(req) {
             resolve({ formElements: {} });
           });
       });
+    // submissions route
+    case /\/form\/\w+-\w+-\w+-\w+-\w+\/submissions/g.test(url):
+      const _form_id = url.match(
+        /\/form\/(\w+-\w+-\w+-\w+-\w+)\/submissions/
+      )[1];
+
+      return new Promise((resolve) => {
+        Submission.findAll({
+          where: { form_id: "dc6d76a6-c696-4c48-9165-8264d46a2112" },
+          include: [
+            {
+              model: User,
+              attributes: [
+                "id",
+                "first_name",
+                "last_name",
+                "email",
+                "role",
+                "phonenumber",
+              ],
+            },
+            { model: Form },
+          ],
+          order: [["createdAt", "DESC"]],
+        })
+          .then((submissions) => {
+            if (submissions) {
+              resolve({ submissions: submissions });
+            } else {
+              resolve({ submissions: null });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            resolve({ submissions: null });
+          });
+      });
     // view form route
     case url.startsWith("/form"):
       let form_id_ = url.split("/").slice(-1)[0];
@@ -93,6 +131,10 @@ export default function getServerSideProps(req) {
 
     case url.startsWith("/success"):
       const { form_id } = req.query;
+      if (!form_id) {
+        req.redirect = { to: "/?message=form_not_found" };
+        return Promise.resolve();
+      }
       return new Promise((resolve) => {
         Form.findOne({ where: { id: form_id } })
           .then((form) => {

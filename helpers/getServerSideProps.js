@@ -68,7 +68,7 @@ export default function getServerSideProps(req) {
 
       return new Promise((resolve) => {
         Submission.findAll({
-          where: { form_id: "dc6d76a6-c696-4c48-9165-8264d46a2112" },
+          where: { form_id: _form_id },
           include: [
             {
               model: User,
@@ -81,7 +81,7 @@ export default function getServerSideProps(req) {
                 "phonenumber",
               ],
             },
-            { model: Form },
+            { model: Form, as: "form" },
           ],
           order: [["createdAt", "DESC"]],
         })

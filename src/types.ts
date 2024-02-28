@@ -14,6 +14,7 @@ export interface ReduxInitialState {
   forms: any[];
   form: any;
   isClient: boolean;
+  submissions: any[];
 }
 
 /**

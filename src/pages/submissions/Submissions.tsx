@@ -1,13 +1,15 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Header } from "../../components/Header";
 import { Modal } from "react-responsive-modal";
+import { RootState } from "../../state-management/store";
 
 interface SubmissionsProps {}
 
 const Submissions: React.FC<SubmissionsProps> = () => {
-  const form = useSelector((state: any) => state.form);
-  const isClient = useSelector((state: any) => state.isClient);
+  const submissions = useSelector((state: RootState) => state.submissions);
+  const form = submissions[0]?.form;
+  const isClient = useSelector((state: RootState) => state.isClient);
   const [open, setOpen] = useState(false);
   const [clickedSubmission, setClickedSubmission] = useState<any>(null);
 
@@ -19,31 +21,39 @@ const Submissions: React.FC<SubmissionsProps> = () => {
   return (
     <div>
       <Header />
-      <h3>Submissions</h3>
       {isClient && (
         <Suspense fallback={<div>Loading...</div>}>
+          <h3 className="m-2">Submissions for form: {form?.id}</h3>
           <div className="container mx-auto">
             <table className="table w-full">
               <thead>
                 <tr>
                   <th>Submission ID</th>
-                  <th>User id</th>
+                  <th>User</th>
                   <th>Submitted At</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {form?.Submissions.map((submission: any) => (
+                {submissions.map((submission: any) => (
                   <tr key={submission.id}>
                     <td>{submission.id}</td>
-                    <td>{submission.user_id}</td>
+                    <td>{submission.User.email}</td>
                     <td>{new Date(submission.created_at).toDateString()}</td>
                     <td className="d-flex gap-3">
                       <a href="#" onClick={() => handleViewForm(submission)}>
                         View
                       </a>
                       <a
-                        href={`/forms/${form.id}/submissions/${submission.id}/delete`}
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              "Are you sure you want to delete this submission?"
+                            )
+                          )
+                            window.location.href = `/forms/${submission?.form_id}/submissions/${submission.id}/delete`;
+                        }}
+                        href={`#`}
                       >
                         Delete
                       </a>

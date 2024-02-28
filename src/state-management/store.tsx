@@ -8,6 +8,7 @@ const ACTIONS = {
   SET_ACTIVE_FORM_ELEMENT: "SET_ACTIVE_FORM_ELEMENT",
   SET_FORMS: "SET_FORMS",
   SET_IS_CLIENT: "SET_IS_CLIENT",
+  SET_SUBMISSIONS: "SET_SUBMISSIONS",
 };
 
 // action creators
@@ -48,6 +49,13 @@ export const setIsClient = (isClient: boolean) => {
   };
 };
 
+export const setSubmissions = (submissions: any) => {
+  return {
+    type: ACTIONS.SET_SUBMISSIONS,
+    payload: submissions,
+  };
+};
+
 // initial state
 const initialState: ReduxInitialState = {
   selectedFormElement: "input",
@@ -56,6 +64,7 @@ const initialState: ReduxInitialState = {
   forms: [],
   isClient: false,
   form: {},
+  submissions: [],
 };
 // Reducers
 
@@ -88,6 +97,11 @@ export const reducer = (
       return {
         ...state,
         isClient: payload,
+      };
+    case ACTIONS.SET_SUBMISSIONS:
+      return {
+        ...state,
+        submissions: payload,
       };
     default:
       return state;

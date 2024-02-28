@@ -88,9 +88,16 @@ app.use("*", handleProtectedRoutes, async (req, res) => {
 
     const rendered = await render(req, ssrManifest);
 
+    //remove cookies from globalProps
     let globalPropsWithoutCookie = Object.fromEntries(
       Object.entries(globalProps).filter(([key]) => key !== "cookies")
     );
+
+    const { redirect } = req;
+
+    if (redirect) {
+      return res.status(302).redirect(redirect.to);
+    }
 
     const html = template
       .replace(

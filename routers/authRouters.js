@@ -77,7 +77,6 @@ authRouter.post("/login", async (req, res) => {
       return res.status(401).send("Invalid email or password");
     }
 
-    console.log(user);
     const authToken = generateToken(user);
     res.status(200).send({
       authToken: authToken,

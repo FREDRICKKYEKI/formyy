@@ -81,9 +81,7 @@ export default function handleProtectedRoutes(req, res, next) {
 
   if (unprotectedRoutes.includes(baseUrl)) {
     return next();
-  }
-
-  if (!cookies || !cookies.authToken) {
+  } else if (!cookies || !cookies.authToken) {
     return res
       .status(401)
       .redirect(`/signup?redirectFrom=${encodeURIComponent(req.originalUrl)}`);

@@ -42,7 +42,11 @@ formRouter.get("/delete/:id", isAuth, async (req, res) => {
     res.status(200).redirect("/");
   } catch (error) {
     console.log(error);
-    res.status(500).send("Error deleting form <a href='/'>Go back</a>");
+    res
+      .status(500)
+      .send(
+        "Error deleting form <a href='/'>Go back</a>. There might be submissions associated with this form. Please delete them first."
+      );
   }
 });
 

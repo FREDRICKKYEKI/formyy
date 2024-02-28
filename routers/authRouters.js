@@ -69,7 +69,7 @@ authRouter.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).send({ error: "Invalid email or password" });
+      return res.status(401).send({ error: "Invalid user" });
     }
     // Compare provided password with the hashed password stored in the database
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -77,8 +77,8 @@ authRouter.post("/login", async (req, res) => {
       return res.status(401).send("Invalid email or password");
     }
 
+    console.log(user);
     const authToken = generateToken(user);
-
     res.status(200).send({
       authToken: authToken,
       userInfo: {

@@ -30,6 +30,11 @@ const LogIn: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data?.error) {
+          alert("Invalid Username or Password");
+          setLoading(false);
+          return;
+        }
         alert("Logged in successfully!");
         setLoading(false);
         localStorage.setItem("userInfo", JSON.stringify(data.userInfo));

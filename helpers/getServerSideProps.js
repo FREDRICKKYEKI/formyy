@@ -1,4 +1,5 @@
 import Form from "../models/Form.js";
+import Submission from "../models/Submission.js";
 import { getUserFromToken } from "../utils.js";
 
 import jwt from "jsonwebtoken";
@@ -12,7 +13,6 @@ export default function getServerSideProps(req) {
   let url = req.originalUrl;
   if (url.length > 1 && url.endsWith("/")) url = url.slice(0, -1); // Remove trailing slash (if any)
   const baseUrl = url.split("/").slice(0, -1).join("/");
-  console.log("url:", url);
 
   const { cookies } = req;
   let user = {};
@@ -60,7 +60,23 @@ export default function getServerSideProps(req) {
       });
     case url.startsWith("/form"):
       let form_id_ = url.split("/").slice(-1)[0];
-      console.log(form_id_);
+      // check if already submission
+      Submission.findOne({
+        where: {
+          form_id: form_id_,
+          user_id: user.id,
+        },
+      })
+        .then((submission) => {
+          if (submission) {
+            return Promise.resolve({ form: {}, formElements: {} });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          return Promise.resolve({ form: {}, formElements: {} });
+        });
+      // get form
       return new Promise((resolve) => {
         Form.findOne({ where: { id: form_id_ } })
           .then((form) => {

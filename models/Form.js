@@ -59,11 +59,19 @@ const Form = db.define(
   }
 );
 
-export default Form;
-
 // Define the relationship between the Form and Submission models
 Form.hasMany(Submission, {
   foreignKey: "form_id",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
+
+Submission.belongsTo(Form, {
+  foreignKey: "form_id",
+  targetKey: "id",
+  as: "form",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+export default Form;

@@ -1,9 +1,8 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { Header } from "../../components/Header";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state-management/store";
-
-const Forms = lazy(() => import("./sections/Forms"));
+import Forms from "./sections/Forms";
 
 const Home: React.FC = () => {
   const forms = useSelector((state: RootState) => state.forms);

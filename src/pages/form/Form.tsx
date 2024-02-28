@@ -3,6 +3,7 @@ import { BaseFormElementProps } from "../../types";
 import { RootState, setActiveFormElement } from "../../state-management/store";
 import { formElementMap } from "../form-maker/sections/FormPreview";
 import { Suspense } from "react";
+import { routes } from "../../App";
 
 const FormElement = (
   element: BaseFormElementProps,
@@ -76,7 +77,12 @@ const Form: React.FC = () => {
             onSubmit={handleFormSubmit}
             className="container px-2 w-100 h-100"
           >
-            <h1 className="my-3">Formyy</h1>
+            <h1 className="my-3">
+              <a href={routes.home} className="text-decoration-none">
+                {" "}
+                Formyy
+              </a>
+            </h1>
             <h3>{form?.title}</h3>
             <p>{form?.description}</p>
             {formElements?.length ? (
@@ -88,7 +94,7 @@ const Form: React.FC = () => {
                 <p className="text-center w-100">Loading form...</p>
               </div>
             )}
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary mt-2 mb-5">
               Submit
             </button>
           </form>

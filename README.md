@@ -5,8 +5,8 @@
 <!-- - create `submissions` table ✅ -->
 <!-- - create form/delete/:id route ✅-->
 <!-- - enable/disable form submissions (active/inactive) ✅ -->
-<!-- - add view Submissions link to home table -->
-<!-- - create form/:id route -->
+<!-- - add view Submissions link to home table ✅ -->
+<!-- - create form/:id route ✅-->
 - create form/:id/submissions route
 - create form/:id/submissions/:id route
 

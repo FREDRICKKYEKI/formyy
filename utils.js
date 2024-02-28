@@ -84,7 +84,6 @@ export default function handleProtectedRoutes(req, res, next) {
   }
 
   if (!cookies || !cookies.authToken) {
-    console.log(req.originalUrl);
     return res
       .status(401)
       .redirect(`/signup?redirectFrom=${encodeURIComponent(req.originalUrl)}`);

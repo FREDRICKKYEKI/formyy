@@ -27,7 +27,6 @@ formRouter.get("/statusChange/", isAuth, async (req, res) => {
 });
 
 formRouter.get("/delete/:id", isAuth, async (req, res) => {
-  console.log(req.params.id);
   const form = await Form.findOne({
     where: {
       id: req.params.id,

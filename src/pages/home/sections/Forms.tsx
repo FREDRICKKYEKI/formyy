@@ -39,7 +39,9 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
                 </td>
                 <td>{formState[row.form_state]}</td>
                 <td>
-                  <a href={`form/${row.id}/`}>View</a>
+                  <a target="_blank" href={`form/${row.id}/`}>
+                    View
+                  </a>
                 </td>
                 <td>{row.title}</td>
                 <td>{row.description}</td>
@@ -53,7 +55,16 @@ const Forms: React.FC<FormsProps> = ({ forms }) => {
                   <a href={`form/edit/${row.id}`}>
                     <i className="fa fa-edit" title="Edit"></i>
                   </a>
-                  <a href={`forms/delete/${row.id}`}>
+                  <a
+                    onClick={() => {
+                      if (
+                        confirm("Are you sure you want to delete this form?")
+                      ) {
+                        window.location.href = `forms/delete/${row.id}`;
+                      }
+                    }}
+                    href={"#"}
+                  >
                     <i className="fa fa-trash" title="Delete"></i>
                   </a>
                 </td>

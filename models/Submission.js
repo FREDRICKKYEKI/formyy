@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import db from "../db_engine/db.js";
+import Form from "./Form.js";
 
 class Submission extends Model {}
 
@@ -42,5 +43,4 @@ Submission.init(
     underscored: true, // Set to true if your database column names use snake_case
   }
 );
-
 export default Submission;

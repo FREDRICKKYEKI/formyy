@@ -1,14 +1,15 @@
 # Formyy
 ***
 ## TO DO
-<!-- - change `form-data` to `form-schema` in TABLE: `forms` ✅ -->
-<!-- - create `submissions` table ✅ -->
-<!-- - create form/delete/:id route ✅-->
-<!-- - enable/disable form submissions (active/inactive) ✅ -->
-<!-- - add view Submissions link to home table ✅ -->
-<!-- - create form/:id route ✅-->
-- create form/:id/submissions route
-- create form/:id/submissions/:id route
+- change `form-data` to `form-schema` in TABLE: `forms` ✅
+- create `submissions` table ✅
+- create form/delete/:id route ✅
+- enable/disable form submissions (active/inactive) ✅
+- add view Submissions link to home table ✅
+- create form/:id route ✅
+- create form/:id/submissions route ✅
+- create form/:id/submissions/:id/delete route ✅
+- add radio button to form schema
 
 ## Pages
 

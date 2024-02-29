@@ -57,6 +57,7 @@ export default function getServerSideProps(req) {
             resolve({ form: form, formElements: form.form_schema });
           })
           .catch((err) => {
+            req.redirect = { to: "/?message=form_not_found" };
             resolve({ formElements: {} });
           });
       });
@@ -119,6 +120,11 @@ export default function getServerSideProps(req) {
       return new Promise((resolve) => {
         Form.findOne({ where: { id: form_id_, form_state: "active" } })
           .then((form) => {
+            if (String(form.form_schema).length < 6) {
+              req.redirect = {
+                to: `/?message=form_empty&form_id=${form_id_}`,
+              };
+            }
             resolve({ form: form, formElements: form.form_schema });
           })
           .catch((err) => {
@@ -128,7 +134,7 @@ export default function getServerSideProps(req) {
               resolve({ form: {}, formElements: {} });
           });
       });
-
+    // success route
     case url.startsWith("/success"):
       const { form_id } = req.query;
       if (!form_id) {

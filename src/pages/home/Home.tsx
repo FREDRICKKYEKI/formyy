@@ -12,11 +12,14 @@ const Home: React.FC = () => {
     <>
       <Header />
       <div className="p-2">
-        <h3>Your Forms</h3>
         {isClient && (
-          <Suspense fallback={<div>Loading forms...</div>}>
-            <Forms forms={forms} />
-          </Suspense>
+          <>
+            {JSON.parse(localStorage.getItem("userInfo") || "{}")?.email}
+            <h3>Your Forms</h3>
+            <Suspense fallback={<div>Loading forms...</div>}>
+              <Forms forms={forms} />
+            </Suspense>
+          </>
         )}
       </div>
     </>

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useSelector } from "react-redux";
 import { Header } from "../../components/Header";
 import { Modal } from "react-responsive-modal";
@@ -29,37 +29,52 @@ const Submissions: React.FC<SubmissionsProps> = () => {
               <thead>
                 <tr>
                   <th>Submission ID</th>
-                  <th>User</th>
-                  <th>Submitted At</th>
+                  <th>By</th>
+                  <th>Submitted On</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {submissions.map((submission: any) => (
-                  <tr key={submission.id}>
-                    <td>{submission.id}</td>
-                    <td>{submission.User.email}</td>
-                    <td>{new Date(submission.created_at).toDateString()}</td>
-                    <td className="d-flex gap-3">
-                      <a href="#" onClick={() => handleViewForm(submission)}>
-                        View
-                      </a>
-                      <a
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              "Are you sure you want to delete this submission?"
-                            )
-                          )
-                            window.location.href = `/forms/${submission?.form_id}/submissions/${submission.id}/delete`;
-                        }}
-                        href={`#`}
-                      >
-                        Delete
-                      </a>
+                {submissions.length ? (
+                  <>
+                    {submissions?.map((submission: any) => (
+                      <tr key={submission.id}>
+                        <td>{submission.id}</td>
+                        <td>{submission.User.email}</td>
+                        <td>
+                          {new Date(submission.created_at).toLocaleString()}
+                        </td>
+                        <td className="d-flex gap-3">
+                          <a
+                            href="#"
+                            onClick={() => handleViewForm(submission)}
+                          >
+                            View
+                          </a>
+                          <a
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  "Are you sure you want to delete this submission?"
+                                )
+                              )
+                                window.location.href = `/forms/${submission?.form_id}/submissions/${submission.id}/delete`;
+                            }}
+                            href={`#`}
+                          >
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </>
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="text-center">
+                      No submissions found
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

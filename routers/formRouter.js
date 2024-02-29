@@ -132,7 +132,11 @@ formRouter.get("/:id/submissions/:sub_id/delete", isAuth, async (req, res) => {
   const submission = await Submission.findOne({
     where: {
       id: req.params.sub_id,
-      user_id: req.user.id,
+    },
+    include: {
+      model: Form,
+      as: "form",
+      where: { id: req.params.id, author_id: req.user.id },
     },
   });
   if (!submission) {

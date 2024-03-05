@@ -1,5 +1,11 @@
 # Formyy
 ***
+## Table of Contents:
+- [Introduction](#Introduction)
+- [Features](#Features)
+- [Installation](#Installation)
+- [Data models](#Data-models)
+
 ## Introduction
 Formyy is a form builder application that allows users to create forms and collect data from users. It is built with:
 * Node.js + Express.js

@@ -102,7 +102,6 @@ export default function getServerSideProps(req) {
     case url.startsWith("/form"):
       let form_id_ = url.split("/").slice(-1)[0];
       // check if already submission
-      // #TODO - work on this!!!
       Submission.findOne({
         where: {
           form_id: form_id_,

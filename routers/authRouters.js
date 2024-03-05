@@ -3,6 +3,13 @@ import User from "../models/User.js";
 import { generateToken } from "../utils.js";
 import bcrypt from "bcrypt";
 
+/**
+ * This router handles the following routes:
+ * GET /auth/create-admin
+ * POST /auth/signup
+ * POST /auth/login
+ */
+
 export const authRouter = express.Router();
 // create admin
 authRouter.get("/create-admin", async (req, res) => {

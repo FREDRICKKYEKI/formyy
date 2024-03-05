@@ -12,6 +12,8 @@ Formyy is a form builder application that allows users to create forms and colle
 * React.js (SSR)
 * Bootstrap
 * MySQL (Sequelize ORM)
+* React-Redux (State management)
+
 
 ## Features
 - Create forms

@@ -1,7 +1,6 @@
 import fs from "node:fs/promises";
 import express from "express";
 import bodyParser from "body-parser";
-import User from "./models/User.js";
 import db from "./db_engine/db.js";
 import handleProtectedRoutes, { generateToken } from "./utils.js";
 import { authRouter } from "./routers/authRouters.js";
@@ -9,6 +8,11 @@ import { formRouter } from "./routers/formRouter.js";
 import getServerSideProps from "./helpers/getServerSideProps.js";
 import cookieParser from "cookie-parser";
 import { miscRouter } from "./routers/miscRouter.js";
+
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
+
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 try {
   await db.authenticate();
@@ -51,6 +55,8 @@ if (!isProduction) {
   app.use(compression());
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
+// swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // miscelleneous routes
 app.use("/", miscRouter);

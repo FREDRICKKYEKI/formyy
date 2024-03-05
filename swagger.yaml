@@ -1,0 +1,127 @@
+openapi: 3.0.0
+info:
+  title: Formyy API
+  version: 1.0.0
+paths:
+  /status:
+    get:
+      summary: Get server status
+      tags:
+        - General
+  /ping:
+    get:
+      summary: Ping server
+      tags:
+        - General
+  /stats:
+    get:
+      summary: Get server statistics
+      tags:
+        - General
+  /auth/create-admin:
+    get:
+      summary: Create admin user
+      tags:
+        - Authentication
+  /auth/signup:
+    post:
+      summary: User sign-up
+      tags:
+        - Authentication
+  /auth/login:
+    post:
+      summary: User login
+      tags:
+        - Authentication
+  /forms/statusChange:
+    get:
+      summary: Change form status
+      tags:
+        - Form
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The ID of the form
+        - in: query
+          name: state
+          schema:
+            type: string
+          required: true
+          description: The new state of the form ("active" or "inactive")
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid request
+  /form/delete/{id}:
+    get:
+      summary: Delete form by ID
+      tags:
+        - Form
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /form/my-forms:
+    get:
+      summary: Get user's forms
+      tags:
+        - Form
+  /form/new:
+    post:
+      summary: Create a new form
+      tags:
+        - Form
+  /form/{id}:
+    put:
+      summary: Update form by ID
+      tags:
+        - Form
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /form/{id}:
+    get:
+      summary: Get form by ID
+      tags:
+        - Form
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /form/submissions:
+    post:
+      summary: Submit a form
+      tags:
+        - Form
+  /form/{id}/submissions/{sub_id}/delete:
+    get:
+      summary: Delete form submission by ID
+      tags:
+        - Form
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - in: path
+        name: sub_id
+        required: true
+        schema:
+          type: string
+          format: uuid

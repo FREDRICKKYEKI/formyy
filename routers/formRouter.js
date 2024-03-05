@@ -5,6 +5,18 @@ import Submission from "../models/Submission.js";
 
 export const formRouter = express.Router();
 
+/**
+ * This router handles the following routes:
+ * GET /form/statusChange
+ * GET /form/delete/:id
+ * GET /form/my-forms
+ * POST /form/new
+ * PUT /form/:id
+ * GET /form/:id
+ * POST /form/submissions
+ * GET /form/:id/submissions/:sub_id/delete
+ */
+
 formRouter.get("/statusChange/", isAuth, async (req, res) => {
   const form = await Form.findOne({
     where: {

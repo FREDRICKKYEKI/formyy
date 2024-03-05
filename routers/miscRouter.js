@@ -5,6 +5,13 @@ import Submission from "../models/Submission.js";
 
 export const miscRouter = express.Router();
 
+/**
+ * This router handles the following routes:
+ * GET /status
+ * GET /ping
+ * GET /stats
+ */
+
 // check status
 miscRouter.get("/status", (_req, res) => {
   res.status(200).send({ status: "ok" });
